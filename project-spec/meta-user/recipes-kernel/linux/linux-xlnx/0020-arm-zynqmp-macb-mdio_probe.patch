@@ -1,0 +1,34 @@
+From 1f35d45498fda8169daedbecb810b79fb354cf92 Mon Sep 17 00:00:00 2001
+From: Alejandro Gomez <algogam@teleco.upv.es>
+Date: Tue, 7 Feb 2023 21:39:39 +0100
+Subject: [PATCH] arm:zynqmp:macb:mdio_probe
+
+Change for the Enclustra SOM in 2022.2
+
+Signed-off-by: Alejandro Gomez <algogam@teleco.upv.es>
+---
+ drivers/net/ethernet/cadence/macb_main.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
+
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index 34bfcb991109..63ea96e13731 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -952,13 +952,7 @@ static int macb_mdiobus_register(struct macb *bp)
+ 
+ 	of_node_put(dev_np);
+ 
+-	/* Check if the MDIO producer device is probed */
+-	if (mdio_pdev && !dev_get_drvdata(&mdio_pdev->dev)) {
+-		platform_device_put(mdio_pdev);
+-		netdev_info(bp->dev, "Defer probe as mdio producer %s is not probed\n",
+-			    dev_name(&mdio_pdev->dev));
+-		return -EPROBE_DEFER;
+-	}
++
+ 
+ 	platform_device_put(mdio_pdev);
+ 	return mdiobus_register(bp->mii_bus);
+-- 
+2.25.1
+
